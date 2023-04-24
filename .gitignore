@@ -1,0 +1,22 @@
+.DS_Store
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**
+!**/src/test/**
+
+
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+mall-cart/target
+mall-common/target
+mall-gateway/target
+mall-goods/target
+mvc-config/target
+servcie-sdk/target
+user-center/target
