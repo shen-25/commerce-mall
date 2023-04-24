@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: goods
+  cloud:
+    nacos:
+      config:
+        server-addr: localhost:8848
+        file-extension: yml
+        namespace: 437f41f7-3c9f-4d28-a58a-4ccc996bc232

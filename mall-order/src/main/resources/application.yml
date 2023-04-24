@@ -1,0 +1,82 @@
+server:
+  port: 8094
+  servlet:
+    context-path: /mall-order
+
+elastic:
+  job:
+    zk:
+      namespace: elastic-job
+      serverLists: 192.168.93.129:2181
+
+spring:
+  application:
+    name: mall-order
+
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: 437f41f7-3c9f-4d28-a58a-4ccc996bc232
+        metadata:
+          management:
+            context-path: ${server.servlet.context-path}/actuator
+    sentinel:
+      # 开启对spring mvc端点的保护
+      filter:
+        enabled: true
+      # 配置 sentinel dashboard 地址
+      transport:
+        dashboard: localhost:8080
+        # 会在应用对应的机器上启动一个 Http Server, 该 Server 会与 Sentinel 控制台做交互
+        port: 8719
+
+  datasource: # 数据源的相关配置
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/foodie-shop?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true
+    username: root
+    password: 123456
+
+  redis:
+    host: zengshen.org
+    port: 6379
+    database: 1
+    password: 123456
+    jedis:
+      pool:
+        max-active: 8
+        max-idle: 8
+        min-idle: 0
+        max-wait: 1000
+
+  rabbitmq:
+    host: zengshen.org
+    port: 5672
+    username: root
+    password: 123456
+  zipkin:
+    sender:
+      type: rabbit  # 默认是 web
+    base-url: http://localhost:9411/
+    discovery-client-enabled: false
+
+# 整合 mybatis
+# tkMapper这个必须添加不然报错了
+mybatis:
+  type-aliases-package: com.zengshen.order.model  # 所有实体类类所在的包路径
+  mapper-locations: classpath:mapper/*.xml         # mapper映射文件
+  configuration:
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl   # 打印sql语句
+
+
+# 打开 Sentinel 对 Feign 的支持
+feign:
+  sentinel:
+    enabled: true
+  httpclient:
+    enabled: true # 开启feign对HttpClient的支持
+    max-connections: 200  # 最大的连接数
+    max-connections-per-route: 50  # 每个路径的最大连接数
+
+

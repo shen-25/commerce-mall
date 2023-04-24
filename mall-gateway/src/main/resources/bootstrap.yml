@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: 437f41f7-3c9f-4d28-a58a-4ccc996bc232

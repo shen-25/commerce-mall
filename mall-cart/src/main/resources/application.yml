@@ -1,0 +1,67 @@
+
+server:
+  port: 8093
+  servlet:
+    context-path: /mall-cart
+
+spring:
+  application:
+    name: mall-cart
+
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: 437f41f7-3c9f-4d28-a58a-4ccc996bc232
+        metadata:
+          management:
+            context-path: ${server.servlet.context-path}/actuator
+    sentinel:
+      # 开启对spring mvc端点的保护
+      filter:
+        enabled: true
+      # 配置 sentinel dashboard 地址
+      transport:
+        dashboard: localhost:8080
+
+  redis:
+    host: zengshen.org
+    port: 6379
+    database: 2
+    password: 123456
+    jedis:
+      pool:
+        max-active: 8
+        max-idle: 8
+        min-idle: 0
+        max-wait: 1000
+
+  rabbitmq:
+    host: zengshen.org
+    port: 5672
+    username: root
+    password: 123456
+  zipkin:
+    sender:
+      type: rabbit  # 默认是 web
+    base-url: http://localhost:9411/
+    discovery-client-enabled: false
+
+cart:
+  thread:
+    core-size: 10
+    max-size: 200
+    keep-alive-time: 40
+
+
+# 打开 Sentinel对 Feign 的支持
+feign:
+  sentinel:
+    enabled: true
+  httpclient:
+    enabled: true # 开启feign对HttpClient的支持
+    max-connections: 200  # 最大的连接数
+    max-connections-per-route: 50  # 每个路径的最大连接数
+
+
+
